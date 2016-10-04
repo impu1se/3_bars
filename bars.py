@@ -26,14 +26,14 @@ def list_min_bars(list_bars):
 	return min_bars
 
 def find_bars(list_bars, x, y):
-	fix_coordinate = []
-	for coordinate in list_bars:
-		x2, y2 = coordinate['Cells']['geoData']['coordinates']
-		res = (x+y)-(x2+y2)
-		if res < 0:
-			res = res*-1
-		fix_coordinate.append(res)				 
-	return min(fix_coordinate)
+	bar_dict = {}
+	for bar in list_bars:
+		name_bar = bar['Cells']['Name']
+		x2,y2 = bar['Cells']['geoData']['coordinates']
+		bar_dict.update({name_bar:(x2+y2)})
+	
+					 
+	return bar_dict
 #123
 
 if __name__ == '__main__':
