@@ -1,9 +1,9 @@
 import sys
 import json
 
-def open_file(file_bars):
+def open_file(list_bars):
 	try:
-		with open(file_bars, encoding='utf-8') as f:
+		with open(list_bars, encoding='utf-8') as f:
 			return json.load(f)
 	except FileNotFoundError:
 		print('Файл не найден')
@@ -30,11 +30,9 @@ def find_bars(list_bars, x, y):
 	for bar in list_bars:
 		name_bar = bar['Cells']['Name']
 		x2,y2 = bar['Cells']['geoData']['coordinates']
-		bar_dict.update({name_bar:(x2+y2)})
-	
-					 
-	return bar_dict
-#123
+		bar_dict.update({name_bar:(((x2-x)**2)+((y2-y)**2))})
+	name, values = min(bar_dict.items())
+	return name
 
 if __name__ == '__main__':
 	list_bars = open_file(sys.argv[1])
@@ -47,8 +45,8 @@ if __name__ == '__main__':
 		elif answer == '2':
 			print(list_min_bars(list_bars))
 		elif answer == '3':
-			x = int(input("Введите ваши координаты по оси x: "))
-			y = int(input("Введите ваши координаты по оси y: "))
+			x = float(input("Введите ваши координаты по оси x: "))
+			y = float(input("Введите ваши координаты по оси y: "))
 			print(find_bars(list_bars,x,y))
 		elif answer == '4':
 			sys.exit()
