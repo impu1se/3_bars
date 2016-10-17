@@ -22,12 +22,10 @@ def get_smallest_bar(file_with_bars):
 
 
 def get_nearest_bar(file_with_bars, longitude, latitude):
-    if longitude is None or latitude is None:
-        print('Вы ввели не правильные координаты')
-        sys.exit(1)
+    bar_longitude, bar_latitude = bar['Cells']['geoData']['coordinates']
     nearest_bar = min(file_with_bars, key=lambda bar: (
-          (bar['Cells']['geoData']['coordinates'][0] - longitude) ** 2 +
-          (bar['Cells']['geoData']['coordinates'][1] - latitude) ** 2))
+          (bar_longitude - longitude) ** 2 +
+          (bar_latitude - latitude) ** 2))
     return nearest_bar['Cells']['Name']
 
 
@@ -49,12 +47,10 @@ if __name__ == '__main__':
         elif answer == '3':
             try:
                 longitude = float(input("Введите ваши координаты широты: "))
+                latitude = float(input("Введите ваши координаты долготы: "))       
             except ValueError:
-                longitude = None
-            try:
-                latitude = float(input("Введите ваши координаты долготы: "))
-            except ValueError:
-                latitude = None
+                print('Вы ввели не правильные координаты')
+                sys.exit(1)
             print(get_nearest_bar(file_with_bars, longitude, latitude))
         elif answer == '4':
             sys.exit()
