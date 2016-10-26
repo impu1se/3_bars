@@ -19,15 +19,14 @@ def get_smallest_bar(file_with_bars):
 
 
 def get_nearest_bar(file_with_bars, longitude, latitude):
-    bar_longitude, bar_latitude = bar['Cells']['geoData']['coordinates']
     nearest_bar = min(file_with_bars, key=lambda bar: (
-          (bar_longitude - longitude) ** 2 +
-          (bar_latitude - latitude) ** 2))
+        (bar['Cells']['geoData']['coordinates'][0] - longitude) ** 2 +
+        (bar['Cells']['geoData']['coordinates'][1] - latitude) ** 2))
     return nearest_bar['Cells']['Name']
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Find bar's')
+    parser = argparse.ArgumentParser(description='Find bars')
     parser.add_argument('-file', dest='filepath',
                         help='Input filepath and filename')
     args = parser.parse_args()
